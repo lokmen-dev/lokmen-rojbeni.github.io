@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lokmen Rojbeni — IT Consultant & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --mono: 'Space Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  }
+
+  .hero-content {
+    max-width: 900px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,255,0.3);
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-name span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: var(--body);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-title strong { color: var(--text); font-weight: 500; }
+
+  .hero-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .contact-item a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .contact-item a:hover { color: var(--accent); }
+  .contact-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,229,255,0.3); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+    color: var(--text);
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .skill-chip:hover {
+    border-color: var(--accent);
+    background: rgba(0,229,255,0.05);
+    transform: translateY(-3px);
+  }
+
+  .skill-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .skill-name {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .timeline-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-company {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .timeline-role {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .timeline-desc {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .timeline-desc li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .timeline-desc li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.75rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .cert-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .cert-card:hover::before { transform: scaleX(1); }
+
+  .cert-issuer {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cert-issuer.microsoft { color: #00a4ef; }
+  .cert-issuer.google { color: #4285f4; }
+  .cert-issuer.coursera { color: #0056d2; }
+  .cert-issuer.other { color: var(--accent3); }
+
+  .cert-name {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .cert-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .cert-verify {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(0,229,255,0.3);
+    transition: all 0.3s;
+  }
+  .cert-verify:hover { border-bottom-color: var(--accent); }
+
+  /* ── EDUCATION ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.75rem;
+    transition: all 0.3s;
+  }
+
+  .edu-card:hover { border-color: rgba(124,58,237,0.4); transform: translateY(-3px); }
+
+  .edu-degree {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-name {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .lang-item:hover { border-color: var(--accent3); transform: translateY(-3px); }
+
+  .lang-name {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .lang-flag {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 3rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    text-align: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero-contact { flex-direction: column; gap: 0.75rem; }
+    .hero-cta { flex-direction: column; }
+    .btn { text-align: center; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">LR.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">// Available for opportunities</div>
+    <h1 class="hero-name">
+      LOKMEN
+      <span>ROJBENI</span>
+    </h1>
+    <p class="hero-title">
+      <strong>IT Consultant</strong> · Full-Stack Developer · AI Implementer · University Lecturer
+    </p>
+    <div class="hero-contact">
+      <div class="contact-item">
+        <span class="contact-dot"></span>
+        <a href="mailto:lokmen@pm.me">lokmen@pm.me</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-dot"></span>
+        <span>+216 99 523 713</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-dot"></span>
+        <a href="https://linkedin.com/in/lokmen-ben-hassen" target="_blank">LinkedIn</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-dot"></span>
+        <span>Tunis, Tunisia</span>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="mailto:lokmen@pm.me" class="btn btn-primary">Hire Me</a>
+      <a href="#experience" class="btn btn-ghost">View Experience</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">// 01 — Expertise</p>
+    <h2 class="section-title">Technical Skills</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-chip"><span class="skill-icon">🐍</span><span class="skill-name">Python</span></div>
+    <div class="skill-chip"><span class="skill-icon">🌐</span><span class="skill-name">JavaScript</span></div>
+    <div class="skill-chip"><span class="skill-icon">⚡</span><span class="skill-name">C++ Dev</span></div>
+    <div class="skill-chip"><span class="skill-icon">🤖</span><span class="skill-name">AI Implementation</span></div>
+    <div class="skill-chip"><span class="skill-icon">☁️</span><span class="skill-name">Azure Cloud</span></div>
+    <div class="skill-chip"><span class="skill-icon">🔒</span><span class="skill-name">Security & Identity</span></div>
+    <div class="skill-chip"><span class="skill-icon">🌍</span><span class="skill-name">Web Development</span></div>
+    <div class="skill-chip"><span class="skill-icon">📡</span><span class="skill-name">Telecommunications</span></div>
+    <div class="skill-chip"><span class="skill-icon">🔧</span><span class="skill-name">Network Infra</span></div>
+    <div class="skill-chip"><span class="skill-icon">📊</span><span class="skill-name">Project Management</span></div>
+    <div class="skill-chip"><span class="skill-icon">🎓</span><span class="skill-name">EdTech</span></div>
+    <div class="skill-chip"><span class="skill-icon">👥</span><span class="skill-name">Team Leadership</span></div>
+    <div class="skill-chip"><span class="skill-icon">🛠️</span><span class="skill-name">Technical Support</span></div>
+    <div class="skill-chip"><span class="skill-icon">🧠</span><span class="skill-name">Mentoring</span></div>
+    <div class="skill-chip"><span class="skill-icon">📱</span><span class="skill-name">VoIP / IPTV</span></div>
+    <div class="skill-chip"><span class="skill-icon">📐</span><span class="skill-name">ERP / Dynamics 365</span></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <p class="section-label">// 02 — Career</p>
+    <h2 class="section-title">Professional Experience</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-header">
+        <div class="timeline-date">Sep 2020 — Present · Tunis / Gabes / Medenine, Tunisia</div>
+        <div class="timeline-company">University of Tunis El Manar</div>
+        <div class="timeline-role">Assistant Professor</div>
+      </div>
+      <ul class="timeline-desc">
+        <li>Develop and deliver lectures, lead discussions, and mentor students at both undergraduate and graduate levels.</li>
+        <li>Designed and delivered training programs on various IT topics to upskill faculty and employees.</li>
+        <li>Successfully implemented an AI-driven software system for a client, resulting in a measurable increase in operational efficiency.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-header">
+        <div class="timeline-date">Jul 2009 — Present · Tunis, Tunisia</div>
+        <div class="timeline-company">Freelance</div>
+        <div class="timeline-role">Programmer & Full-Stack Developer</div>
+      </div>
+      <ul class="timeline-desc">
+        <li>Write production code in Python, Java, C++, and JavaScript to build diverse software applications.</li>
+        <li>End-to-end software lifecycle: requirements gathering, design, coding, testing, and maintenance.</li>
+        <li>Delivered custom solutions for clients across education, telecom, and business sectors.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-header">
+        <div class="timeline-date">Jan 2015 — Mar 2017 · Tunis, Tunisia</div>
+        <div class="timeline-company">Espace Telecom</div>
+        <div class="timeline-role">Technical Support Specialist</div>
+      </div>
+      <ul class="timeline-desc">
+        <li>Maintained system functionality, served as webmaster, and managed computer maintenance & repair.</li>
+        <li>Handled network connections and telecommunications including VoIP.</li>
+        <li>Led a team in upgrading the company's network infrastructure, resulting in improved speed and reliability.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="reveal">
+    <p class="section-label">// 03 — Credentials</p>
+    <h2 class="section-title">Certifications</h2>
+  </div>
+  <div class="certs-grid">
+
+    <!-- Google / Coursera -->
+    <div class="cert-card reveal">
+      <div class="cert-issuer google">● Google / Coursera</div>
+      <div class="cert-name">Foundations of Project Management</div>
+      <div class="cert-meta">Issued April 2026</div>
+      <a class="cert-verify" href="https://coursera.org/verify/OOOOYA2415VI" target="_blank">Verify Certificate →</a>
+    </div>
+
+    <!-- Microsoft Certs -->
+    <div class="cert-card reveal">
+      <div class="cert-issuer microsoft">● Microsoft Certified</div>
+      <div class="cert-name">Azure AI Fundamentals — AI-900</div>
+      <div class="cert-meta">2023 · Code: wEQhY-48DY</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer microsoft">● Microsoft Certified</div>
+      <div class="cert-name">Security, Compliance & Identity — SC-900</div>
+      <div class="cert-meta">2022 · Code: MrAd-s4YL</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer microsoft">● Microsoft Certified</div>
+      <div class="cert-name">Azure Data Fundamentals — DP-900</div>
+      <div class="cert-meta">2023 · Code: wEhbD-48Dd</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer microsoft">● Microsoft Certified</div>
+      <div class="cert-name">Dynamics 365 Fundamentals ERP — MB-920</div>
+      <div class="cert-meta">2023 · Code: nV4w-DkwU</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer microsoft">● Microsoft Certified</div>
+      <div class="cert-name">Office Specialist Associate — Office 2019</div>
+      <div class="cert-meta">2023 · Code: n7nwuTMY</div>
+    </div>
+
+    <!-- Other certs -->
+    <div class="cert-card reveal">
+      <div class="cert-issuer other">● Impaakt</div>
+      <div class="cert-name">Certified Impact Rater</div>
+      <div class="cert-meta">2023</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer other">● University of Pennsylvania / Coursera</div>
+      <div class="cert-name">English for STEM (Science, Tech, Engineering & Mathematics)</div>
+      <div class="cert-meta">2023</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-issuer other">● ANETI / ILO</div>
+      <div class="cert-name">Soft Skills — International Labour Organization</div>
+      <div class="cert-meta">2018 · Tunis, Tunisia</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="reveal">
+    <p class="section-label">// 04 — Academic</p>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">Master's Degree — M.Sc.</div>
+      <div class="edu-name">Enterprise Information Systems Engineering</div>
+      <div class="edu-school">University of Tunis El Manar — FSEGT</div>
+      <div class="edu-date">Sep 2017 – Jul 2019</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Master's Degree — M.Sc.</div>
+      <div class="edu-name">Computer Science</div>
+      <div class="edu-school">University of Tunis El Manar — FST</div>
+      <div class="edu-date">Sep 2006 – Jun 2010</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Bachelor's Degree — B.Sc.</div>
+      <div class="edu-name">Mathematics & Computer Science (D.E.U.P.C.)</div>
+      <div class="edu-school">University of Tunis El Manar — FST</div>
+      <div class="edu-date">Sep 2006 – Jul 2008</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LANGUAGES -->
+<section>
+  <div class="reveal">
+    <p class="section-label">// 05 — Languages</p>
+    <h2 class="section-title">Languages</h2>
+  </div>
+  <div class="lang-grid reveal">
+    <div class="lang-item">
+      <span class="lang-flag">🇬🇧</span>
+      <div class="lang-name">English</div>
+    </div>
+    <div class="lang-item">
+      <span class="lang-flag">🇹🇳</span>
+      <div class="lang-name">Arabic</div>
+    </div>
+    <div class="lang-item">
+      <span class="lang-flag">🇫🇷</span>
+      <div class="lang-name">French</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal" style="text-align:center; max-width: 600px; margin: 0 auto;">
+    <p class="section-label" style="justify-content:center; display:flex;">//  06 — Get In Touch</p>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p style="color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem;">
+      Open to consulting opportunities, academic collaborations, and freelance development projects.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+      <a href="mailto:lokmen@pm.me" class="btn btn-primary">lokmen@pm.me</a>
+      <a href="https://linkedin.com/in/lokmen-ben-hassen" target="_blank" class="btn btn-ghost">LinkedIn Profile</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Lokmen Rojbeni</span> · Built with precision · Tunis, Tunisia</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav active link
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
